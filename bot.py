@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import CommandHandler, CallbackContext
 from pycoingecko import CoinGeckoAPI
 import os
 
@@ -39,14 +39,17 @@ def start(update: Update, context: CallbackContext) -> None:
                               "/ez ETH")
 
 def main():
-    updater = Updater(TOKEN, use_context=True)
-    dp = updater.dispatcher
+    from telegram.ext import Application
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("ez", ez))
+    # Initialize Application (new way)
+    application = Application.builder().token(TOKEN).build()
 
-    updater.start_polling()
-    updater.idle()
+    # Add handlers
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("ez", ez))
+
+    # Start polling
+    application.run_polling()
 
 if __name__ == '__main__':
     main()

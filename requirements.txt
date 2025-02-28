@@ -1,2 +1,2 @@
-python-telegram-bot
-pycoingecko
+python-telegram-bot==21.10
+pycoingecko==3.2.0
